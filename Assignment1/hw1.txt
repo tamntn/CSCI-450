@@ -1,0 +1,26 @@
+Higher Order Functions
+http://learnyouahaskell.com/higher-order-functions
+
+
+
+Problem 8 Professor Note:
+Develop a Haskell function
+    minf :: (Int -> Int) -> Int
+such that minf g returns the smallest integer m such that 0 <= m <= 10000000 and g m == 0 (if such an integer exists).
+
+Section 2.4.5 of the class notes (textbook) at https://john.cs.olemiss.edu/~hcc/csci450/notes/HaskellNotes/02BasicHaskell450.html#functions-t1---t2 discusses function types.
+
+Function minf is a higher-order function
+    - It takes ONE argument g and returns an Int
+    - g is itself a function that takes an Int and returns an Int
+    - A call minf g searches the range from 0 through 10,000,000 for the smallest integer m that makes g m == 0
+    - There might not be such an integer, so you have to take this into account.
+
+Here is one example of a g
+
+    g :: Int -> Int
+    g n | n > 1000 = 0
+    g n            = n
+Then
+
+    minf g == 1001
