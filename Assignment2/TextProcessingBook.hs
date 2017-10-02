@@ -90,7 +90,14 @@ getLine3 len (w:ws)
 
 -- Drop the first line from a list of words.
 dropLine :: Int -> [Word'] -> Line'
-dropLine = dropLine    -- DUMMY DEFINITION
+dropLine len []      = []
+dropLine len (w:ws)
+    | lenword <= len = dropLine newlen ws
+    | len == lineLen = [w]
+    | otherwise      = []
+    where
+        lenword = length w
+        newlen  = len - (lenword + 1)
 
 -- Split into lines. (Changed to use getLine3.)
 splitLines :: [Word'] -> [Line']
