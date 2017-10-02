@@ -3,10 +3,11 @@
 -- Tam Nguyen
 
 import TextProcessingBook
+import Data.Char
+import Data.Set
 
--- 7.27
+-- 7.27: function written on line 92 in "TextProcessingBook.hs"
 -- Define the function dropLine specified in the text
--- function written in "TextProcessingBook.hs", line 92
 
 -- 7.28
 -- Give a definition of the function
@@ -75,6 +76,21 @@ wcFormat (x:xs) = (character, word, line)
 -- Note the punctuation and white space are ignored in the test, and that no distinction is made between capital and small letters.
 -- You might first like to develop a test which simply tests the string is exactly the same backwards and forwards,
 -- and only afterwards take account of punctation and capital letters.
+--convertLower :: String -> String
+--convertLower (x:xs) = toLower x : convertLower xs
+specialCharacter = whitespace ++ ",.?!-:;\"\'{}[]><~`!@#$%^&*()_+=|"
+
+removeAllSpecial :: String -> String
+removeAllSpecial [] = []
+removeAllSpecial (x:xs)
+    | elem x specialCharacter = removeAllSpecial xs
+    | otherwise         = x : removeAllSpecial xs
+
+lowerCase :: String -> String
+lowerCase = Prelude.map toLower
+
+isPalin :: String -> Bool
+isPalin w = lowerCase (removeAllSpecial w) == lowerCase (reverse (removeAllSpecial w))
 
 -- 7.34
 -- [Harder] Design a function:
