@@ -4,7 +4,8 @@
 
 import TextProcessingBook
 import Data.Char
-import Data.Set
+import Data.List
+import Data.Maybe
 
 -- 7.27: function written on line 92 in "TextProcessingBook.hs"
 -- Define the function dropLine specified in the text
@@ -101,3 +102,18 @@ isPalin w = lowerCase (removeAllSpecial w) == lowerCase (reverse (removeAllSpeci
 -- For instance:
 -- subst "much " "tall " "How much is that?" = "How tall is that?"
 -- If the substring oldSub does not occur in st, the result should be st.
+subst :: String -> String -> String -> String
+subst oldSub newSub st
+    | (isInfixOf oldSub st == False)= st
+    | otherwise = joinLine(take (subIndex) stringList ++ subList ++ drop (subIndex+1) stringList)
+        where
+            subIndex = getIndex (getWord oldSub) st
+            stringList = splitWords st
+            subList = splitWords newSub
+
+getIndex :: String -> String -> Int
+getIndex oldSub st = fromMaybe 0 (elemIndex oldSub (splitWords st))
+
+-- The subst function above only works when oldSub is a word without any space in between.
+-- subst function won't work correctly when oldSub has space within. EX: "much is" as oldSub won't work.
+-- The length and spaces in newSub won't affect the function.
