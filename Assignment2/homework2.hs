@@ -14,14 +14,18 @@ import TextProcessingBook
 -- which turns a line into printable form. For example:
 -- joinLine ["dog", "cat"] = "dog cat"
 joinLine :: Line' -> String
-joinLine []         = ""
+joinLine []              = ""
 joinLine (w:ws) 
     | length (w:ws) == 1 = w
     | otherwise          = w ++ " " ++ joinLine ws
 
 -- 7.29
 -- Using the fuction joinLine, or otherwise, define the function
--- joinLines :: [Line] -> String
+joinLines :: [Line'] -> String
+joinLines []             = ""
+joinLines (l:ls) 
+    | length (l:ls) == 1 = joinLine l
+    | otherwise          = joinLine l ++ "\n" ++ joinLines ls
 
 -- 7.30
 -- In this case study we have defined separate 'take' and 'drop' functions for words and lines.
@@ -39,6 +43,29 @@ joinLine (w:ws)
 -- Design a similar function:
 -- wcFormat :: String -> (Int, Int, Int)
 -- which returns the same statistics for the text after it has been filled.
+countLinesByCharacter :: String -> Int
+countLinesByCharacter [] = 0
+countLinesByCharacter (x:xs)
+    | elem x ['\n']      = 1 + countLinesByCharacter xs
+    | length (x:xs) == 1 = 1
+    | otherwise          = countLinesByCharacter xs
+
+wc :: String -> (Int, Int, Int)
+wc [] = (0,0,0)
+wc (x:xs) = (character, word, line)
+    where
+        character = length (x:xs)
+        word = length (splitWords (x:xs))
+        line = countLinesByCharacter (x:xs)
+
+wcFormat :: String -> (Int, Int, Int)
+wcFormat [] = (0,0,0)
+wcFormat (x:xs) = (character, word, line)
+    where
+        formatString = joinLines (fill (x:xs))
+        character = length formatString
+        word = length (splitWords formatString)
+        line = countLinesByCharacter (x:xs)
 
 -- 7.33
 -- Define a function:
