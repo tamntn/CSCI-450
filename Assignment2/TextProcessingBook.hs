@@ -94,7 +94,7 @@ dropLine len []      = []
 dropLine len (w:ws)
     | lenword <= len = dropLine newlen ws
     | len == lineLen = [w]
-    | otherwise      = []
+    | otherwise      = (w:ws)
     where
         lenword = length w
         newlen  = len - (lenword + 1)

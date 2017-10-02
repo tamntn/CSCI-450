@@ -6,17 +6,18 @@ import TextProcessingBook
 
 -- 7.27
 -- Define the function dropLine specified in the text
---dropLine :: String -> String
---dropLine [] = []
---dropLine (x:xs)
---	| elem x ['\n'] = dropSpace (x:xs)
---	| otherwise 	= dropLine xs
+-- function written in "TextProcessingBook.hs", line 92
 
 -- 7.28
 -- Give a definition of the function
 -- joinLine :: Line -> String
 -- which turns a line into printable form. For example:
 -- joinLine ["dog", "cat"] = "dog cat"
+joinLine :: Line' -> String
+joinLine []         = ""
+joinLine (w:ws) 
+    | length (w:ws) == 1 = w
+    | otherwise          = w ++ " " ++ joinLine ws
 
 -- 7.29
 -- Using the fuction joinLine, or otherwise, define the function
