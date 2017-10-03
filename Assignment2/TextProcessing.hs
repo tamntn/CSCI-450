@@ -2,6 +2,9 @@
 -- Homework 2
 -- Tam Nguyen
 
+module TextProcessing
+where
+
 import TextProcessingBook
 import Data.Char
 import Data.List
@@ -9,6 +12,15 @@ import Data.Maybe
 
 -- 7.27: function written on line 92 in "TextProcessingBook.hs"
 -- Define the function dropLine specified in the text
+--dropLine :: Int -> [Word'] -> Line'
+--dropLine len []      = []
+--dropLine len (w:ws)
+--    | lenword <= len = dropLine newlen ws
+--    | len == lineLen = [w]
+--    | otherwise      = (w:ws)
+--    where
+--        lenword = length w
+--        newlen  = len - (lenword + 1)
 
 -- 7.28
 -- Give a definition of the function
@@ -36,6 +48,31 @@ joinLines (l:ls)
 -- 7.31
 -- [Harder] Modify the function joinLine so that it justifies the line to length lineLen
 -- by adding the appropriate number of spaces between the words.
+-- The method is joinJustifiedLine. It takes in 2 arguments: the length of the line and the Line' to be joined.
+
+getLineLength :: Line' -> Int
+getLineLength [] = 0
+getLineLength (w:ws)
+    | length (w:ws) == 1 = length w
+    | otherwise          = length w + 1 + getLineLength ws
+
+constructJustifiedLine :: Int -> Int -> Line' -> String
+constructJustifiedLine spaceLength numberOfLongerSpaces (w:ws)
+    | length (w:ws) == 1        = w
+    | numberOfLongerSpaces == 0 = w ++ replicate spaceLength ' ' ++ constructJustifiedLine spaceLength numberOfLongerSpaces ws
+    | otherwise                 = w ++ replicate (spaceLength+1) ' ' ++ constructJustifiedLine spaceLength (numberOfLongerSpaces-1) ws
+
+joinJustifiedLine :: Int -> Line' -> String
+joinJustifiedLine lineLength [] = ""
+joinJustifiedLine lineLength (w:ws)
+    | differenceLength <= 0 = joinLine (w:ws)
+    | otherwise             = constructJustifiedLine spaceLength numberOfLongerSpaces (w:ws)
+    where
+        lineLengthFromWords = getLineLength (w:ws)
+        differenceLength = lineLength - lineLengthFromWords
+        numberOfSpaces = length (w:ws) - 1
+        spaceLength = (div differenceLength numberOfSpaces) + 1
+        numberOfLongerSpaces = mod differenceLength numberOfSpaces
 
 -- 7.32
 -- Design a function:
@@ -67,7 +104,7 @@ wcFormat (x:xs) = (character, word, line)
         formatString = joinLines (fill (x:xs))
         character = length formatString
         word = length (splitWords formatString)
-        line = countLinesByCharacter (x:xs)
+        line = length (fill (x:xs))
 
 -- 7.33
 -- Define a function:

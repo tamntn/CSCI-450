@@ -90,14 +90,18 @@ getLine3 len (w:ws)
 
 -- Drop the first line from a list of words.
 dropLine :: Int -> [Word'] -> Line'
-dropLine len []      = []
-dropLine len (w:ws)
-    | lenword <= len = dropLine newlen ws
-    | len == lineLen = [w]
-    | otherwise      = (w:ws)
-    where
-        lenword = length w
-        newlen  = len - (lenword + 1)
+dropLine len []     = []
+dropLine len (w:ws) = drop (length (getLine3 len (w:ws))) (w:ws)
+
+--dropLine :: Int -> [Word'] -> Line'
+--dropLine len []      = []
+--dropLine len (w:ws)
+--    | lenword <= len = dropLine newlen ws
+--    | len == lineLen = [w]
+--    | otherwise      = (w:ws)
+--    where
+--        lenword = length w
+--        newlen  = len - (lenword + 1)
 
 -- Split into lines. (Changed to use getLine3.)
 splitLines :: [Word'] -> [Line']
@@ -107,6 +111,6 @@ splitLines ws = getLine3 lineLen ws
 
 -- Fill a text string into lines.
 fill :: String -> [Line']
-fill = splitLines . splitWords
+fill xs = splitLines (splitWords xs)
 
 -- END function definitions from Thompson textbook
