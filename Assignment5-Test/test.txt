@@ -1,0 +1,216 @@
+Assignment5>ghc SandwichDSL_test.hs
+
+[3 of 3] Compiling Main             ( SandwichDSL_test.hs, SandwichDSL_test.o )
+Linking SandwichDSL_test.exe ...
+
+C:\Users\samee\Haskell\Assignment5>SandwichDSL_test
+-----------------------------------------------------
+"1. newSandwich "
+
+ newSandwich White
+Sandwich [Bread White]
+
+newSandwich Wheat
+Sandwich [Bread Wheat]
+
+newSandwich Rye
+Sandwich [Bread Rye]
+-----------------------------------------------------
+"1. addLayer "
+addLayer (newSandwich White)(Meat Turkey)
+Sandwich [Meat Turkey,Bread White]
+
+addLayer (newSandwich White)(Cheese Jack)
+Sandwich [Cheese Jack,Bread White]
+
+addLayer (Sandwich [Meat Turkey,Bread White])(Vegetable Onion)
+Sandwich [Vegetable Onion,Meat Turkey,Bread White]
+-----------------------------------------------------
+"1. newPlatter "
+newPlatter
+Platter []
+
+-----------------------------------------------------
+"1. addSandwich "
+addSandwich (newPlatter)(newSandwich White)
+Platter [Sandwich [Bread White]]
+
+addSandwich (newPlatter)(Sandwich [Vegetable Onion,Meat Turkey,Bread White])
+Platter [Sandwich [Vegetable Onion,Meat Turkey,Bread White]]
+
+addSandwich (newPlatter) (addLayer (Sandwich [Meat Turkey,Bread White])(Vegetable Onion))
+Platter [Sandwich [Vegetable Onion,Meat Turkey,Bread White]]
+-----------------------------------------------------
+2 isBread
+
+ isBread (Bread White)
+True
+
+ isBread (Cheese Jack)
+False
+
+isBread (Meat Ham)
+False
+
+isBread (Vegetable Onion)
+False
+
+isBread (Condiment Mayo)
+False
+
+-----------------------------------------------------
+2 isMeat
+
+isMeat (Bread White)
+False
+
+isMeat (Cheese Jack)
+False
+
+isMeat (Meat Ham)
+True
+
+isMeat (Vegetable Onion)
+False
+
+ isMeat (Condiment Mayo)
+False
+
+-----------------------------------------------------
+2 isCheese
+
+isCheese (Bread White)
+False
+
+isCheese (Cheese Jack)
+True
+
+isCheese (Meat Ham)
+False
+
+isCheese (Vegetable Onion)
+False
+
+ isCheese (Condiment Mayo)
+False
+
+-----------------------------------------------------
+2 isVegetable
+
+ isVegetable (Bread White)
+False
+
+ isVegetable (Cheese Jack)
+False
+
+isVegetable (Meat Ham)
+False
+
+isVegetable (Vegetable Onion)
+True
+
+ isVegetable (Condiment Mayo)
+    False
+
+-----------------------------------------------------
+2 isCondiment
+
+isCondiment (Bread White)
+False
+
+isCondiment (Cheese Jack)
+False
+
+isCondiment (Meat Ham)
+False
+
+isCondiment (Vegetable Onion)
+False
+
+isCondiment (Condiment Mayo)
+True
+
+-----------------------------------------------------
+3 noMeat
+
+noMeat (Sandwich [Meat Ham])
+False
+
+noMeat (Sandwich [Bread Rye])
+True
+
+noMeat (Sandwich [Bread Rye, Cheese Jack])
+True
+
+noMeat (Sandwich [Bread Rye, Cheese Jack, Meat Ham])
+False
+
+-----------------------------------------------------
+4 inOSO
+
+inOSO (Sandwich [Meat Ham])
+False
+
+inOSO (Sandwich [Bread Rye])
+False
+
+inOSO (Sandwich [Bread Rye, Cheese Jack, Bread White, Bread Rye])
+False
+
+inOSO (Sandwich [Bread Rye, Cheese Jack, Meat Ham, Bread Rye])
+True
+
+-----------------------------------------------------
+4 intoOSO
+
+intoOSO (Sandwich [Meat Ham]) Rye
+Sandwich [Bread Rye,Meat Ham,Bread Rye]
+
+intoOSO (Sandwich [Bread Rye] White)
+Sandwich [Bread Rye,Bread Rye]
+
+intoOSO (Sandwich [Bread Rye, Cheese Jack, Bread White, Bread Rye] White)
+Sandwich [Bread Rye,Cheese Jack,Bread Rye]
+
+intoOSO (Sandwich [Bread Rye, Cheese Jack, Meat Ham, Bread Rye])
+Sandwich [Bread Rye,Cheese Jack,Meat Ham,Bread Rye]
+
+-----------------------------------------------------
+5 priceSandwich
+
+priceSandwich prices 0 (Sandwich [Meat Ham])
+120
+
+priceSandwich prices10 (Sandwich [Bread Rye])
+40
+
+priceSandwich prices 0 (Sandwich [Bread Rye, Cheese Jack])
+90
+
+priceSandwich prices 5 (Sandwich [Bread Rye, Cheese Jack, Meat Ham])
+215
+-----------------------------------------------------
+6 eqSandwich
+
+eqSandwich (Sandwich [Bread Rye, Meat Ham, Bread Rye]) (Sandwich [Bread Rye, Meat Ham, Bread Rye])
+True
+
+eqSandwich (Sandwich[Bread White, Meat Ham, Cheese Jack, Bread White]) (Sandwich[Bread White, Cheese Jack, Meat Ham, Bread White])
+True
+
+eqSandwich (Sandwich[Bread White, Meat Ham, Cheese Jack, Vegetable Lettuce, Bread White]) (Sandwich[Bread White, Cheese Jack, Meat Ham, Bread White])
+False
+
+-----------------------------------------------------
+7 equalSandwich
+
+equalSandwich (Sandwich [Bread Rye, Meat Ham, Bread Rye]) (Sandwich [Bread Rye, Meat Ham, Bread Rye])
+True
+
+equalSandwich (Sandwich[Bread White, Meat Ham, Cheese Jack, Bread White]) (Sandwich[Bread White, Cheese Jack, Meat Ham, Bread White])
+True
+
+equalSandwich (Sandwich[Bread White, Meat Ham, Cheese Jack, Vegetable Lettuce, Bread White]) (Sandwich[Bread White, Cheese Jack, Meat Ham, Bread White])
+False
+
+-----------------------------------------------------
